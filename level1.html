@@ -2,8 +2,7 @@
 <html lang="nl">
 <head>
 <meta charset="UTF-8">
-<title>Quiz</title>
-
+<title>Quiz Level 1</title>
 <style>
   body {
     font-family: Arial, sans-serif;
@@ -24,7 +23,6 @@
     text-align: center;
   }
 
-  /* Woordenlijst */
   .word-list {
     margin-top: 20px;
     text-align: left;
@@ -36,45 +34,15 @@
   .word {
     padding: 6px 0;
     font-size: 18px;
-  }
-
-  /* Controller layout zoals jouw tekening */
-  .controller-wrapper {
-    position: relative;
-    width: 180px;
-    height: 180px;
-    margin: 25px auto 0 auto;
-  }
-
-  .btn-round {
-    width: 65px;
-    height: 65px;
-    border-radius: 50%;
-    background: #3d475c;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 26px;
-    font-weight: bold;
     cursor: pointer;
-    transition: 0.2s;
-    box-shadow: 0 6px 12px rgba(0,0,0,0.4);
-    position: absolute;
   }
 
-  /* Geen beweging meer */
-  .btn-round:hover {
-    background: #4f5c75;
+  .word:hover {
+    color: #ffd76a;
   }
-
-  /* Posities zoals jouw schets */
-  .btn-top    { top: 0; left: 50%; transform: translateX(-50%); }
-  .btn-left   { top: 50%; left: 0; transform: translateY(-50%); }
-  .btn-right  { top: 50%; right: 0; transform: translateY(-50%); }
-  .btn-bottom { bottom: 0; left: 50%; transform: translateX(-50%); }
 
   button {
-    margin-top: 30px;
+    margin-top: 20px;
     width: 100%;
     padding: 12px;
     border: none;
@@ -84,77 +52,97 @@
     font-weight: bold;
     cursor: pointer;
   }
+
+  .correct { color: #00ff00; }
+  .wrong { color: #ff5555; }
 </style>
 </head>
-
 <body>
 
 <div class="quiz-box">
   <h2 id="question">Vraag komt hier...</h2>
-
-  <!-- Woordenlijst -->
   <div class="word-list" id="wordList"></div>
-
-  <!-- Controller knoppen in kruis-vorm -->
-  <div class="controller-wrapper">
-    <div class="btn-round btn-top"    onclick="choose(0)">A</div>
-    <div class="btn-round btn-left"   onclick="choose(1)">B</div>
-    <div class="btn-round btn-right"  onclick="choose(2)">C</div>
-    <div class="btn-round btn-bottom" onclick="choose(3)">D</div>
-  </div>
-
   <button onclick="nextQuestion()">Volgende</button>
 </div>
 
 <script>
-  const questions = [
-    { q: "Vraag 1", a: ["woord1", "woord2", "woord3", "woord4"] },
-    { q: "Vraag 2", a: ["woord1", "woord2", "woord3", "woord4"] },
-    { q: "Vraag 3", a: ["woord1", "woord2", "woord3", "woord4"] },
-    { q: "Vraag 4", a: ["woord1", "woord2", "woord3", "woord4"] },
-    { q: "Vraag 5", a: ["woord1", "woord2", "woord3", "woord4"] },
-    { q: "Vraag 6", a: ["woord1", "woord2", "woord3", "woord4"] },
-    { q: "Vraag 7", a: ["woord1", "woord2", "woord3", "woord4"] },
-    { q: "Vraag 8", a: ["woord1", "woord2", "woord3", "woord4"] },
-    { q: "Vraag 9", a: ["woord1", "woord2", "woord3", "woord4"] },
-    { q: "Vraag 10", a: ["woord1", "woord2", "woord3", "woord4"] }
-  ];
+// 🌟 Pak het thema uit de URL
+const params = new URLSearchParams(window.location.search);
+const thema = params.get("thema") || "weer"; // standaard "weer"
 
-  let index = 0;
+// 🌟 Vragen per thema
+const questionBank = {
+  weer: [
+    { q: "Hoe zeg je 'zon' in het Spaans?", a: ["sol", "lluvia", "nieve", "viento"], correct: 0 },
+    { q: "Hoe zeg je 'regen' in het Spaans?", a: ["nieve", "lluvia", "nube", "tormenta"], correct: 1 },
+    { q: "Hoe zeg je 'sneeuw' in het Spaans?", a: ["nieve", "sol", "viento", "nube"], correct: 0 }
+  ],
+  dieren: [
+    { q: "Hoe zeg je 'hond' in het Spaans?", a: ["perro", "gato", "caballo", "pájaro"], correct: 0 },
+    { q: "Hoe zeg je 'kat' in het Spaans?", a: ["gato", "perro", "oveja", "conejo"], correct: 0 },
+    { q: "Hoe zeg je 'paard' in het Spaans?", a: ["caballo", "vaca", "cerdo", "gato"], correct: 0 }
+  ],
+  kleding: [
+    { q: "Hoe zeg je 'shirt' in het Spaans?", a: ["camisa", "pantalón", "zapato", "sombrero"], correct: 0 },
+    { q: "Hoe zeg je 'broek' in het Spaans?", a: ["pantalón", "camisa", "chaqueta", "sombrero"], correct: 0 },
+    { q: "Hoe zeg je 'hoed' in het Spaans?", a: ["sombrero", "camisa", "pantalón", "zapato"], correct: 0 }
+  ]
+};
 
-  function loadQuestion() {
-    const q = questions[index];
-    document.getElementById("question").textContent = q.q;
+// 🌟 Kies juiste vragenlijst
+let questions = questionBank[thema];
+let index = 0;
 
-    const list = document.getElementById("wordList");
-    list.innerHTML = "";
+// 🌟 Laad vraag
+function loadQuestion() {
+  const q = questions[index];
+  document.getElementById("question").textContent = q.q;
 
-    q.a.forEach((word, i) => {
-      const div = document.createElement("div");
-      div.className = "word";
-      div.textContent = `${["A","B","C","D"][i]}: ${word}`;
-      list.appendChild(div);
-    });
+  const list = document.getElementById("wordList");
+  list.innerHTML = "";
+
+  q.a.forEach((word, i) => {
+    const div = document.createElement("div");
+    div.className = "word";
+    div.textContent = `${["A","B","C","D"][i]}: ${word}`;
+    div.onclick = () => choose(i);
+    list.appendChild(div);
+  });
+}
+
+// 🌟 Check antwoord
+function choose(answerIndex) {
+  const q = questions[index];
+  const listItems = document.querySelectorAll(".word");
+  
+  if (answerIndex === q.correct) {
+    listItems[answerIndex].classList.add("correct");
+  } else {
+    listItems[answerIndex].classList.add("wrong");
+    listItems[q.correct].classList.add("correct");
   }
 
-  function choose(answerIndex) {
-    const letter = ["A","B","C","D"][answerIndex];
-    console.log("Gekozen:", letter);
+  // Daarna mag de volgende knop pas werken
+  document.querySelector("button").disabled = false;
+}
+
+// 🌟 Volgende vraag
+function nextQuestion() {
+  index++;
+  document.querySelector("button").disabled = true;
+  
+  if (index < questions.length) {
+    loadQuestion();
+  } else {
+    alert("🎉 Je hebt alle vragen van dit thema beantwoord!");
+    window.location.href = "LevelRoad.html"; // Terug naar main menu
   }
+}
 
-  function nextQuestion() {
-    index++;
+// 🌟 Init
+loadQuestion();
+document.querySelector("button").disabled = true;
 
-    if (index < questions.length) {
-      loadQuestion();
-    } else {
-      // ⭐ TERUG NAAR LEVEL ROAD ⭐
-      window.location.href = "LevelRoad.html"; 
-      // Pas dit aan naar jouw level map pagina
-    }
-  }
-
-  loadQuestion();
 </script>
 
 </body>
