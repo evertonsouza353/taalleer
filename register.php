@@ -14,14 +14,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email    = $_POST["email"];
     $password = password_hash($_POST["password"], PASSWORD_DEFAULT);
     $role     = $_POST["role"];
+    $xp       = 0; // ⭐ Nieuwe gebruikers beginnen met 0 XP
 
-    $stmt = $conn->prepare("INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)");
+    // Let op: xp kolom is toegevoegd
+    $stmt = $conn->prepare("INSERT INTO users (name, email, password, role, xp) VALUES (?, ?, ?, ?, ?)");
 
     if (!$stmt) {
         die("Prepare failed: " . $conn->error);
     }
 
-    $stmt->bind_param("ssss", $name, $email, $password, $role);
+    $stmt->bind_param("ssssi", $name, $email, $password, $role, $xp);
 
     if ($stmt->execute()) {
         // 🔥 TERUG NAAR LOGIN
