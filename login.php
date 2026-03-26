@@ -22,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION["name"] = $user["name"];
 
             // 🔥 BELANGRIJK: redirect naar dashboard
-            header("Location: dashboard.html");
+            header("Location: startmenutaal.html");
             exit();
 
         } else {
