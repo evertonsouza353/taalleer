@@ -12,7 +12,7 @@
 <body>
     <div class="container"></div>
     <div class="form-box" id="login-form">
-        <form action="">
+       <form onsubmit="event.preventDefault(); alert('Login werkt!');">
             <h2>Login Languagelearn</h2>
             <input type="email" name="email" placeholder="Email" required>
             <input type="password" name="password" placeholder="Password" required>
@@ -22,7 +22,7 @@
     </div>
 
     <div class="form-box" id="register-form">
-        <form action="">
+        <form onsubmit="event.preventDefault(); alert('Registratie gelukt!');">
             <h2>Registreren Languagelearn</h2>
             <input type="text" name="name" placeholder="Name" required>
             <input type="email" name="email" placeholder="Email" required>
