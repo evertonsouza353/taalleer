@@ -37,9 +37,7 @@
     cursor: pointer;
   }
 
-  .word:hover {
-    color: #ffd76a;
-  }
+  .word:hover { color: #ffd76a; }
 
   button {
     margin-top: 20px;
@@ -110,13 +108,24 @@ function loadQuestion() {
   });
 }
 
-// 🌟 Check antwoord
+// 🌟 Check antwoord + XP toevoegen
 function choose(answerIndex) {
   const q = questions[index];
   const listItems = document.querySelectorAll(".word");
   
   if (answerIndex === q.correct) {
     listItems[answerIndex].classList.add("correct");
+
+    // ✅ XP toevoegen via fetch request
+    fetch("update_xp.php", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: "xp=10" // 10 XP per correct antwoord
+    })
+    .then(response => response.text())
+    .then(data => {
+      console.log("XP toegevoegd:", data);
+    });
   } else {
     listItems[answerIndex].classList.add("wrong");
     listItems[q.correct].classList.add("correct");
@@ -142,7 +151,6 @@ function nextQuestion() {
 // 🌟 Init
 loadQuestion();
 document.querySelector("button").disabled = true;
-
 </script>
 
 </body>
