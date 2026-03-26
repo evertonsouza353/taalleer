@@ -1,0 +1,14 @@
+level trainer
+donker en velle accenten (gamestyle)
+met inlog
+doelgroep: geen
+lange slinger levels
+met scores:
+    aan de hand van de score een totaal score en badges
+zelf woordjes invullen
+responsif
+game knoppen (controller)
+database met vragen en antwoorden
+meerkeuze vragen
+bepaalde badges voor verschillende behalingen
+japans leren
