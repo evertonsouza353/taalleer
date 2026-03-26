@@ -166,7 +166,7 @@ random.forEach(item => {
     // 🔥 Klik om thema te openen
     div.onclick = () => {
         const thema = item.split(" ")[0].toLowerCase();
-        window.location.href = `level1.php?thema=${thema}`;
+        window.location.href = `level1.html?thema=${thema}`;
     };
 
     grid.appendChild(div);
