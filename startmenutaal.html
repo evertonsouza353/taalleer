@@ -129,9 +129,14 @@ random.forEach(item => {
         <span>${item}</span>
     `;
 
+    // 🔥 HIER voeg je de klik toe
+    div.onclick = () => {
+        const thema = item.split(" ")[0].toLowerCase();
+        window.location.href = `level1.html?thema=${thema}`;
+    };
+
     grid.appendChild(div);
 });
-</script>
 
 </body>
 </html>
