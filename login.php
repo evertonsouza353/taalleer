@@ -20,9 +20,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Sla gebruiker op in session
             $_SESSION["user_id"] = $user["id"];
             $_SESSION["name"] = $user["name"];
+            $_SESSION["user_xp"] = $user["xp"]; 
 
             // 🔥 BELANGRIJK: redirect naar dashboard
-            header("Location: startmenutaal.html");
+            header("Location: startmenutaal.php");
             exit();
 
         } else {
