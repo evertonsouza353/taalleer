@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Pocket Lingo Menu</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            display: flex;
+            height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 260px;
+            background: #1e1e1e;
+            color: white;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .sidebar h2 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            opacity: 0.8;
+        }
+
+        .menu-item {
+            padding: 10px 0;
+            border-bottom: 1px solid #333;
+            cursor: pointer;
+        }
+
+        .menu-item:hover {
+            color: #4da3ff;
+        }
+
+        /* Main content */
+        .content {
+            flex: 1;
+            padding: 30px;
+            overflow-y: auto;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 30px;
+        }
+
+        .category {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .category:hover {
+            transform: translateY(-4px);
+        }
+
+        .circle {
+            width: 80px;
+            height: 80px;
+            background: #4da3ff;
+            border-radius: 50%;
+            margin: 0 auto 15px;
+        }
+
+        .category span {
+            display: block;
+            font-size: 15px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar">
+        <h2>MAIN MENU</h2>
+        <div class="menu-item">Phrases</div>
+        <div class="menu-item">Flashcards</div>
+        <div class="menu-item">Quick Sheets</div>
+        <div class="menu-item">Favourites</div>
+        <div class="menu-item">Word of the day</div>
+        <div class="menu-item">About</div>
+        <div class="menu-item">Subscribe</div>
+        <div class="menu-item">More languages</div>
+        <div class="menu-item">Support</div>
+        <div class="menu-item">Share this app</div>
+        <div class="menu-item">Rate this app</div>
+        <div class="menu-item">Upgrade or Restore</div>
+    </div>
+
+    <div class="content">
+        <div class="grid">
+            <div class="category"><div class="circle"></div><span>General conversation</span></div>
+            <div class="category"><div class="circle"></div><span>Numbers & Colours</span></div>
+            <div class="category"><div class="circle"></div><span>Time & Weather</span></div>
+            <div class="category"><div class="circle"></div><span>Accommodation</span></div>
+            <div class="category"><div class="circle"></div><span>Food & Drinks</span></div>
+            <div class="category"><div class="circle"></div><span>Money & Shopping</span></div>
+            <div class="category"><div class="circle"></div><span>Transport</span></div>
+            <div class="category"><div class="circle"></div><span>Directions</span></div>
+            <div class="category"><div class="circle"></div><span>Places & Attractions</span></div>
+            <div class="category"><div class="circle"></div><span>Relationships</span></div>
+            <div class="category"><div class="circle"></div><span>Emergency & Health</span></div>
+            <div class="category"><div class="circle"></div><span>Sports & Activities</span></div>
+        </div>
+    </div>
+
+</body>
+</html>
