@@ -10,7 +10,7 @@
 
 <div class="container">
 
-    <!-- Login Form -->
+    
     <div class="form-box" id="login-form">
         <form action="login.php" method="POST">
             <h2>Login Languagelearn</h2>
@@ -23,7 +23,7 @@
         </form>
     </div>
 
-    <!-- Register Form -->
+  
     <div class="form-box" id="register-form">
         <form action="register.php" method="POST">
             <h2>Registreren Languagelearn</h2>
@@ -45,5 +45,14 @@
 </div>
 
 <script src="script.js"></script>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+
+if (params.get("registered") === "1") {
+    alert("✅ Registratie succesvol! Je kunt nu inloggen.");
+}
+</script>
+
 </body>
 </html>

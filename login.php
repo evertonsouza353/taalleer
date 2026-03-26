@@ -1,12 +1,12 @@
 <?php
-include "db.php";
 session_start();
+include "db.php";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $email    = $_POST["email"];
+    $email = $_POST["email"];
     $password = $_POST["password"];
 
-    $stmt = $conn->prepare("SELECT * FROM users WHERE email = ?");
+    $stmt = $conn->prepare("SELECT * FROM users WHERE email=?");
     $stmt->bind_param("s", $email);
     $stmt->execute();
 
@@ -16,18 +16,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $user = $result->fetch_assoc();
 
         if (password_verify($password, $user["password"])) {
-            $_SESSION['user_id'] = $user['id'];
-            $_SESSION['name']    = $user['name'];
-            echo "Login succesvol! Welkom " . $user["name"];
-            // Later kun je redirecten naar een dashboard:
-            // header("Location: dashboard.php"); exit();
+
+            // Sla gebruiker op in session
+            $_SESSION["user_id"] = $user["id"];
+            $_SESSION["name"] = $user["name"];
+
+            // 🔥 BELANGRIJK: redirect naar dashboard
+            header("Location: dashboard.html");
+            exit();
+
         } else {
-            echo "Verkeerd wachtwoord!";
+            echo "Verkeerd wachtwoord";
         }
     } else {
-        echo "Gebruiker niet gevonden!";
+        echo "Gebruiker niet gevonden";
     }
-
-    $stmt->close();
 }
 ?>

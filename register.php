@@ -24,7 +24,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->bind_param("ssss", $name, $email, $password, $role);
 
     if ($stmt->execute()) {
-        echo "✅ Registratie succesvol!";
+        // 🔥 TERUG NAAR LOGIN
+        header("Location: index.html?registered=1");
+        exit();
     } else {
         echo "❌ Fout: " . $stmt->error;
     }
