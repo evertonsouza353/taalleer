@@ -21,23 +21,60 @@
     border-radius: 16px;
     width: 350px;
     box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    text-align: center;
   }
 
-  .option {
+  /* Woordenlijst */
+  .word-list {
+    margin-top: 20px;
+    text-align: left;
     background: #3d475c;
-    padding: 12px;
-    margin: 10px 0;
-    border-radius: 10px;
+    padding: 15px;
+    border-radius: 12px;
+  }
+
+  .word {
+    padding: 6px 0;
+    font-size: 18px;
+  }
+
+  /* Controller layout zoals jouw tekening */
+  .controller-wrapper {
+    position: relative;
+    width: 180px;
+    height: 180px;
+    margin: 25px auto 0 auto;
+  }
+
+  .btn-round {
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    background: #3d475c;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 26px;
+    font-weight: bold;
     cursor: pointer;
     transition: 0.2s;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.4);
+    position: absolute;
   }
 
-  .option:hover {
+  /* Geen beweging meer */
+  .btn-round:hover {
     background: #4f5c75;
   }
 
+  /* Posities zoals jouw schets */
+  .btn-top    { top: 0; left: 50%; transform: translateX(-50%); }
+  .btn-left   { top: 50%; left: 0; transform: translateY(-50%); }
+  .btn-right  { top: 50%; right: 0; transform: translateY(-50%); }
+  .btn-bottom { bottom: 0; left: 50%; transform: translateX(-50%); }
+
   button {
-    margin-top: 20px;
+    margin-top: 30px;
     width: 100%;
     padding: 12px;
     border: none;
@@ -55,26 +92,32 @@
 <div class="quiz-box">
   <h2 id="question">Vraag komt hier...</h2>
 
-  <div id="options"></div>
+  <!-- Woordenlijst -->
+  <div class="word-list" id="wordList"></div>
+
+  <!-- Controller knoppen in kruis-vorm -->
+  <div class="controller-wrapper">
+    <div class="btn-round btn-top"    onclick="choose(0)">A</div>
+    <div class="btn-round btn-left"   onclick="choose(1)">B</div>
+    <div class="btn-round btn-right"  onclick="choose(2)">C</div>
+    <div class="btn-round btn-bottom" onclick="choose(3)">D</div>
+  </div>
 
   <button onclick="nextQuestion()">Volgende</button>
 </div>
 
 <script>
-  // -----------------------------
-  // 10 vragen (placeholder)
-  // -----------------------------
   const questions = [
-    { q: "Vraag 1", a: ["A", "B", "C", "D"] },
-    { q: "Vraag 2", a: ["A", "B", "C", "D"] },
-    { q: "Vraag 3", a: ["A", "B", "C", "D"] },
-    { q: "Vraag 4", a: ["A", "B", "C", "D"] },
-    { q: "Vraag 5", a: ["A", "B", "C", "D"] },
-    { q: "Vraag 6", a: ["A", "B", "C", "D"] },
-    { q: "Vraag 7", a: ["A", "B", "C", "D"] },
-    { q: "Vraag 8", a: ["A", "B", "C", "D"] },
-    { q: "Vraag 9", a: ["A", "B", "C", "D"] },
-    { q: "Vraag 10", a: ["A", "B", "C", "D"] }
+    { q: "Vraag 1", a: ["woord1", "woord2", "woord3", "woord4"] },
+    { q: "Vraag 2", a: ["woord1", "woord2", "woord3", "woord4"] },
+    { q: "Vraag 3", a: ["woord1", "woord2", "woord3", "woord4"] },
+    { q: "Vraag 4", a: ["woord1", "woord2", "woord3", "woord4"] },
+    { q: "Vraag 5", a: ["woord1", "woord2", "woord3", "woord4"] },
+    { q: "Vraag 6", a: ["woord1", "woord2", "woord3", "woord4"] },
+    { q: "Vraag 7", a: ["woord1", "woord2", "woord3", "woord4"] },
+    { q: "Vraag 8", a: ["woord1", "woord2", "woord3", "woord4"] },
+    { q: "Vraag 9", a: ["woord1", "woord2", "woord3", "woord4"] },
+    { q: "Vraag 10", a: ["woord1", "woord2", "woord3", "woord4"] }
   ];
 
   let index = 0;
@@ -83,30 +126,31 @@
     const q = questions[index];
     document.getElementById("question").textContent = q.q;
 
-    const optionsDiv = document.getElementById("options");
-    optionsDiv.innerHTML = "";
+    const list = document.getElementById("wordList");
+    list.innerHTML = "";
 
-    q.a.forEach(answer => {
+    q.a.forEach((word, i) => {
       const div = document.createElement("div");
-      div.className = "option";
-      div.textContent = answer;
-
-      // -----------------------------
-      // HIER kun jij database‑koppeling toevoegen
-      // Bijvoorbeeld: saveAnswerToDB(index, answer)
-      // -----------------------------
-      div.onclick = () => console.log("Gekozen:", answer);
-
-      optionsDiv.appendChild(div);
+      div.className = "word";
+      div.textContent = `${["A","B","C","D"][i]}: ${word}`;
+      list.appendChild(div);
     });
+  }
+
+  function choose(answerIndex) {
+    const letter = ["A","B","C","D"][answerIndex];
+    console.log("Gekozen:", letter);
   }
 
   function nextQuestion() {
     index++;
+
     if (index < questions.length) {
       loadQuestion();
     } else {
-      document.querySelector(".quiz-box").innerHTML = "<h2>Je bent klaar!</h2>";
+      // ⭐ TERUG NAAR LEVEL ROAD ⭐
+      window.location.href = "LevelRoad.html"; 
+      // Pas dit aan naar jouw level map pagina
     }
   }
 
