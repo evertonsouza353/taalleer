@@ -1,11 +1,117 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="nl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+<meta charset="UTF-8">
+<title>Quiz</title>
+
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #1b2330;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+
+  .quiz-box {
+    background: #2c3547;
+    padding: 30px;
+    border-radius: 16px;
+    width: 350px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+  }
+
+  .option {
+    background: #3d475c;
+    padding: 12px;
+    margin: 10px 0;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+
+  .option:hover {
+    background: #4f5c75;
+  }
+
+  button {
+    margin-top: 20px;
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    background: #ffd76a;
+    color: #3d2a00;
+    font-weight: bold;
+    cursor: pointer;
+  }
+</style>
 </head>
+
 <body>
-    
+
+<div class="quiz-box">
+  <h2 id="question">Vraag komt hier...</h2>
+
+  <div id="options"></div>
+
+  <button onclick="nextQuestion()">Volgende</button>
+</div>
+
+<script>
+  // -----------------------------
+  // 10 vragen (placeholder)
+  // -----------------------------
+  const questions = [
+    { q: "Vraag 1", a: ["A", "B", "C", "D"] },
+    { q: "Vraag 2", a: ["A", "B", "C", "D"] },
+    { q: "Vraag 3", a: ["A", "B", "C", "D"] },
+    { q: "Vraag 4", a: ["A", "B", "C", "D"] },
+    { q: "Vraag 5", a: ["A", "B", "C", "D"] },
+    { q: "Vraag 6", a: ["A", "B", "C", "D"] },
+    { q: "Vraag 7", a: ["A", "B", "C", "D"] },
+    { q: "Vraag 8", a: ["A", "B", "C", "D"] },
+    { q: "Vraag 9", a: ["A", "B", "C", "D"] },
+    { q: "Vraag 10", a: ["A", "B", "C", "D"] }
+  ];
+
+  let index = 0;
+
+  function loadQuestion() {
+    const q = questions[index];
+    document.getElementById("question").textContent = q.q;
+
+    const optionsDiv = document.getElementById("options");
+    optionsDiv.innerHTML = "";
+
+    q.a.forEach(answer => {
+      const div = document.createElement("div");
+      div.className = "option";
+      div.textContent = answer;
+
+      // -----------------------------
+      // HIER kun jij database‑koppeling toevoegen
+      // Bijvoorbeeld: saveAnswerToDB(index, answer)
+      // -----------------------------
+      div.onclick = () => console.log("Gekozen:", answer);
+
+      optionsDiv.appendChild(div);
+    });
+  }
+
+  function nextQuestion() {
+    index++;
+    if (index < questions.length) {
+      loadQuestion();
+    } else {
+      document.querySelector(".quiz-box").innerHTML = "<h2>Je bent klaar!</h2>";
+    }
+  }
+
+  loadQuestion();
+</script>
+
 </body>
 </html>
