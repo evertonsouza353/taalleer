@@ -62,7 +62,7 @@ a:hover {
     text-decoration: underline;
 }
 
-/* Belangrijk: register form verbergen */
+/* Register form standaard verbergen */
 #register-form {
     display: none;
 }
